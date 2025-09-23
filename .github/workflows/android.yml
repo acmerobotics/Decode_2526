@@ -1,12 +1,12 @@
-
+# This workflow will build a debug APK of an Android project.
 
 name: Android CI
 
 on:
   push:
-    branches: [ "main" ] # Trigger the workflow on pushes to the main branch
+    branches: [ '**' ] # Trigger the workflow on pushes to any branch
   pull_request:
-    branches: [ "main" ] # Trigger the workflow on pull requests targeting the main branch
+    branches: [ '**' ] # Trigger the workflow on pull requests targeting any branch
 
 jobs:
   build:

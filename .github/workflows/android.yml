@@ -3,17 +3,17 @@ name: Android CI
 on:
   push:
     branches: [ "master" ]
-  workflow_dispatch:  # allows manual runs too
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
+      # 1. Checkout repo
       - uses: actions/checkout@v4
 
-      # Step 2: Set up JDK 17
+      # 2. Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -21,23 +21,23 @@ jobs:
           java-version: 17
           cache: gradle
 
-      # Step 3: Make gradlew executable
+      # 3. Make gradlew executable
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # Step 4: Build debug APK
+      # 4. Build debug APK
       - name: Build Debug APK
         run: ./gradlew assembleDebug --info
 
-      # Step 5: Create timestamp variable
+      # 5. Set timestamp
       - name: Set timestamp
         id: ts
         run: echo "TS=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
 
-      # Step 6: Create or update GitHub Release with APK
-      - name: Upload APK to Release
+      # 6. Upload APK to GitHub Release
+      - name: Create Release and Upload APK
         uses: ncipollo/release-action@v1
         with:
-          tag: "build-${{ github.run_number }}"      # auto-incremented tag per workflow run
-          name: "APK ${{ env.TS }}"                  # name in release
-          files: app/build/outputs/apk/debug/app-debug.apk
+          tag: "build-${{ github.run_number }}"
+          name: "app-debug-${{ env.TS }}.apk"
+          artifacts: app/build

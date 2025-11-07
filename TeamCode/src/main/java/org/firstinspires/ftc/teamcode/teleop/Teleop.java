@@ -41,13 +41,6 @@ public class Teleop extends LinearOpMode {
                     compressionLauncher.launch();
                 }
 
-                if (gamepad1.b){
-                    compressionLauncher.load();
-                }
-
-                if (gamepad1.x){
-                    compressionLauncher.fire();
-                }
             }
             {
                 for (AprilTagDetection detection : vision.getDetections()) {

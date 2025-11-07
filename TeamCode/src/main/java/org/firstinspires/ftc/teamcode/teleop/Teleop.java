@@ -35,6 +35,20 @@ public class Teleop extends LinearOpMode {
                 rightBack.setPower((x + y - turn) * motorPowerScaling);
                 rightFront.setPower((-x + y - turn) * motorPowerScaling);
             }
+            //launcher controls
+            {
+                if (gamepad1.a){
+                    compressionLauncher.launch();
+                }
+
+                if (gamepad1.b){
+                    compressionLauncher.load();
+                }
+
+                if (gamepad1.x){
+                    compressionLauncher.fire();
+                }
+            }
             {
                 for (AprilTagDetection detection : vision.getDetections()) {
                     telemetry.addData("AprilTag ID", detection.id);

@@ -3,15 +3,20 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.robot.compressionLauncher;
+import org.firstinspires.ftc.teamcode.robot.CompressionLauncher;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.teamcode.robot.visionTest;
+
+
 
 @TeleOp(name = "Teleop", group = "Linear OpMode")
 public class Teleop extends LinearOpMode {
     static double SLOWMO_POWER_SCALE = .2;
+    CompressionLauncher launcher = new CompressionLauncher(hardwareMap);
+
     public void runOpMode() {
         DcMotor leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         DcMotor leftBack = hardwareMap.get(DcMotor.class, "leftBack");
@@ -41,11 +46,11 @@ public class Teleop extends LinearOpMode {
                 rightFront.setPower((-x + y - turn) * motorPowerScaling);
             }
             //launcher controls
-            /*{
+            {
                 while (gamepad1.a){
-                    compressionLauncher.fire();
+                    launcher.launchAll();
                 }
-            }*/
+            }
             if (gamepad1.dpad_up){
                 feedServo.setPosition(0);
             }

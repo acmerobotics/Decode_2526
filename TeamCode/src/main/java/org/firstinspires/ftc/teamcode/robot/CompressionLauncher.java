@@ -6,32 +6,34 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class compressionLauncher {
+public class CompressionLauncher {
     HardwareMap hMap = null;
     DcMotor compressionMotor = null;
     Servo feedServo = null;
 
-    public void clHardwareMap(HardwareMap hardwareMap) {
+    private static int SPINUP_WAIT_MS = 250;
+    private static double FEED_OPEN_POSE =  0.25;
+    private static double FEED_CLOSE_POSE =  0;
+
+    private static int OPEN_GATE_DURATION_MS =  3000;
+
+
+    public CompressionLauncher(HardwareMap hardwareMap){
         hMap = hardwareMap;
         compressionMotor = hMap.get(DcMotorEx.class, "leftFront");
         feedServo = hMap.get(Servo.class, "feedServo");
     }
 
-    public void fire() {
-        compressionMotor.setPower(1);
-        load();
-    }
 
-    public void load(){
-        feedServo.setPosition(0.5);
-        sleep(500);
-        feedServo.setPosition(0);
-    }
-
-    public void poopoospray(){
+    public void launchAll(){
         compressionMotor.setPower(1);
-        sleep(500);
+        sleep(SPINUP_WAIT_MS);
+        feedServo.setPosition(FEED_OPEN_POSE);
+        sleep(OPEN_GATE_DURATION_MS);
+        feedServo.setPosition(FEED_CLOSE_POSE);
         compressionMotor.setPower(0);
+
+
     }
 
 }

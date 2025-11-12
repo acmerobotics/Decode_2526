@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
-@Autonomous("Autonomous", "Do nothing")
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+@Autonomous(name = "Autonomous")
 
 public class doNothingAuto {
 

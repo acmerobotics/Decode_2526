@@ -15,10 +15,6 @@ public class visionTest {
 
     AprilTagDetection myAprilTagDetection;
 
-    double myTagPoseX = myAprilTagDetection.ftcPose.x;
-    double myTagPoseY = myAprilTagDetection.ftcPose.y;
-    double myTagPoseZ = myAprilTagDetection.ftcPose.z;
-
     public void initVision(HardwareMap hardwareMap) {
         aprilTag = new AprilTagProcessor.Builder().build();
 
@@ -30,8 +26,5 @@ public class visionTest {
 
     public List<AprilTagDetection> getDetections() {
         return aprilTag.getDetections();
-        return myTagPoseX;
-        return myTagPoseY;
-        return myTagPoseZ;
     }
 }

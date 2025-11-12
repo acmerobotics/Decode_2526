@@ -3,6 +3,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.robot.compressionLauncher;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.teamcode.robot.visionTest;
 
@@ -14,6 +17,8 @@ public class Teleop extends LinearOpMode {
         DcMotor leftBack = hardwareMap.get(DcMotor.class, "leftBack");
         DcMotor rightBack = hardwareMap.get(DcMotor.class, "rightBack");
         DcMotor rightFront = hardwareMap.get(DcMotor.class, "rightFront");
+
+        Servo feedServo = hardwareMap.get(Servo.class, "feedServo");
 
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -36,11 +41,16 @@ public class Teleop extends LinearOpMode {
                 rightFront.setPower((-x + y - turn) * motorPowerScaling);
             }
             //launcher controls
-            {
-                if (gamepad1.a){
-                    compressionLauncher.launch();
+            /*{
+                while (gamepad1.a){
+                    compressionLauncher.fire();
                 }
-
+            }*/
+            if (gamepad1.dpad_up){
+                feedServo.setPosition(0);
+            }
+            if (gamepad1.dpad_down){
+                feedServo.setPosition(0.25);
             }
             {
                 for (AprilTagDetection detection : vision.getDetections()) {

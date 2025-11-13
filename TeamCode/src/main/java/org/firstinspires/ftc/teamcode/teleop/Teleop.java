@@ -28,9 +28,6 @@ public class Teleop extends LinearOpMode {
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        visionTest vision = new visionTest();
-        vision.initVision(hardwareMap);
-
         waitForStart();
 
         while (opModeIsActive()) {
@@ -56,12 +53,6 @@ public class Teleop extends LinearOpMode {
             }
             if (gamepad1.dpad_down){
                 feedServo.setPosition(0.25);
-            }
-            {
-                for (AprilTagDetection detection : vision.getDetections()) {
-                    telemetry.addData("AprilTag ID", detection.id);
-                }
-                telemetry.update();
             }
         }
     }

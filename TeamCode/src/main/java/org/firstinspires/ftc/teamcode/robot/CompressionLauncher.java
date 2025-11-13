@@ -16,7 +16,7 @@ public class CompressionLauncher {
     private static double FEED_CLOSE_POSE =  0;
 
     private static int OPEN_GATE_DURATION_MS =  3000;
-
+//: Comment
 
     public CompressionLauncher(HardwareMap hardwareMap){
         hMap = hardwareMap;

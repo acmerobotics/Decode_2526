@@ -33,8 +33,10 @@ public class CompressionLauncher {
         feedServo.setPosition(FEED_CLOSE_POSE);
         compressionMotor.setPower(0);
 
-
     }
 
+    public void tvTime(){
+        
+    }
 }
 

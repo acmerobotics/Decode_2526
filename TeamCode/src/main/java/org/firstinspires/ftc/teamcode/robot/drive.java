@@ -13,13 +13,12 @@ public class drive {
     DcMotor dcMotorB = null;
     DcMotor dcMotorC = null;
     DcMotor dcMotorD = null;
-    ElapsedTime runTime = new ElapsedTime();
+    
     // The value that we multiply the encoder by to get one tile
     static final float WHEEL_MOTOR_ENCODER_SCALING = 1003.046f;
     static final int LEFT_EXTENDER_ENDSTOP = 1695;
     static final int RIGHT_EXTENDER_ENDSTOP = 1695;
 
-    //hi
     public drive(HardwareMap hardwareMap) {
         hMap = hardwareMap;
         dcMotorA = hMap.get(DcMotorEx.class, "leftFront");
@@ -32,7 +31,6 @@ public class drive {
         dcMotorB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         dcMotorC.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         dcMotorD.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        runTime.reset();
     }
 
     public void driveTiles(float Tiles) {
@@ -54,10 +52,13 @@ public class drive {
         dcMotorD.setPower(.75);
         sleep(2000);
     }
+    
     // Positive rotates to the left, and negative rotates to the right
     public void setRotateDegrees(double Deg) {
+        
         // This assumes the bot wheelbase radius is 8 in times sqrt of 2
         final float DEGREES_TO_TICKS = (float) (2 * Math.PI * Math.sqrt(2) / 3 / 360 * WHEEL_MOTOR_ENCODER_SCALING);
+        
         dcMotorA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         dcMotorB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         dcMotorD.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -76,6 +77,7 @@ public class drive {
         dcMotorD.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sleep(2000);
     }
+    
     // Negative is left, Positive is right
     public void strafeTiles(float toBeStrafed) {
         dcMotorA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -96,16 +98,12 @@ public class drive {
         dcMotorD.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sleep(2000);
     }
+    
     public String gatherMotorPos() {
         return "dcMotorA Position " + dcMotorA.getCurrentPosition() +
                 "\ndcMotorB Position " + dcMotorB.getCurrentPosition() +
                 "\ndcMotorC Position " + dcMotorC.getCurrentPosition() +
                 "\nDcMotorD Position " + dcMotorD.getCurrentPosition();
 
-
     }
-
-
-
 }
-

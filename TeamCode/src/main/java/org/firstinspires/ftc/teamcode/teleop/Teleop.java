@@ -19,7 +19,6 @@ public class Teleop extends LinearOpMode {
     static float GATE_CLOSED_DEGREES = 45 + 90;
     static float GATE_DEGREES_SCALING = 300;
 
-
     static double SLOWMO_POWER_SCALE = .2;
 
     public void runOpMode() {

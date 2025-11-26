@@ -35,8 +35,13 @@ public class CompressionLauncher {
 
     }
 
-    public void tvTime(){
-        
+    public void tvTime(Boolean yes){
+        if (yes){
+            
+        }
+        if (!yes){
+            
+        }
     }
 }
 

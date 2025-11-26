@@ -8,9 +8,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.CompressionLauncher;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-//import org.firstinspires.ftc.teamcode.robot.visionTest;
-
-
 
 @TeleOp(name = "Teleop", group = "Linear OpMode")
 public class Teleop extends LinearOpMode {
@@ -33,11 +30,15 @@ public class Teleop extends LinearOpMode {
 
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        
         CompressionLauncher launcher = new CompressionLauncher(hardwareMap);
 
-
         waitForStart();
-
+        
+        while (opModeIsInit()){
+            launchMotor.setPower(.7);
+        }
+        
         while (opModeIsActive()) {
             // Translation and rotation controls
             {
@@ -50,42 +51,13 @@ public class Teleop extends LinearOpMode {
                 rightBack.setPower((x + y - turn) * motorPowerScaling);
                 rightFront.setPower((-x + y - turn) * motorPowerScaling);
             }
-            //launcher controls
-            {
-                //if (gamepad1.a) {
-                    //launcher.launchAll();
-                //}
-            }
-
-            //if (gamepad1.right_bumper){
-            //launchMotor.setPower(1);
-
-            //if (gamepad1.left_bumper){
-            //launchMotor.setPower(0);
-
+            
             if (gamepad1.right_trigger > .50) {
                 feedServo.setPosition(GATE_CLOSED_DEGREES/GATE_DEGREES_SCALING);
             }
+            
             if (gamepad1.left_trigger > .50) {
                 feedServo.setPosition(GATE_OPEN_DEGREES/GATE_DEGREES_SCALING);
-            }
-
-            if (gamepad1.dpad_up) {
-                feedServo.setPosition(feedServo.getPosition() + 0.1);
-                telemetry.addData("dpad up", gamepad1.dpad_up);
-                sleep(250);
-
-            }
-            if (gamepad1.dpad_down) {
-                feedServo.setPosition(feedServo.getPosition() - 0.1);
-                telemetry.addData("dpad down", gamepad1.dpad_down);
-                sleep(250);
-
-            }
-            {
-                if (gamepad1.b) {
-                    launchMotor.setPower(.7);
-                }
             }
 
             telemetry.addData("servo pos", feedServo.getPosition());

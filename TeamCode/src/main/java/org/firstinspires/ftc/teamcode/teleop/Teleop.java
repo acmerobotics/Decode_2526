@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,10 +13,6 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 @TeleOp(name = "Teleop", group = "Linear OpMode")
 public class Teleop extends LinearOpMode {
 
-    static float GATE_OPEN_DEGREES = 45;
-    static float GATE_CLOSED_DEGREES = 45 + 90;
-    static float GATE_DEGREES_SCALING = 300;
-
     static double SLOWMO_POWER_SCALE = .2;
 
     public void runOpMode() {
@@ -24,21 +21,24 @@ public class Teleop extends LinearOpMode {
         DcMotor rightBack = hardwareMap.get(DcMotor.class, "rightBack");
         DcMotor rightFront = hardwareMap.get(DcMotor.class, "rightFront");
 
-        DcMotor launchMotor = hardwareMap.get(DcMotor.class, "launchMotor");
+        DcMotor leftLaunchMotor = hardwareMap.get(DcMotorEx.class, "leftLaunchMotor");
+        DcMotor rightLaunchMotor = hardwareMap.get(DcMotorEx.class, "rightLaunchMotor");
 
         Servo feedServo = hardwareMap.get(Servo.class, "feedServo");
 
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        
-        CompressionLauncher launcher = new CompressionLauncher(hardwareMap);
+        rightLaunchMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        leftLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
-        
-        while (opModeIsInit()){
+        /*
+        while (opModeInInit()){
             launchMotor.setPower(.7);
         }
-        
+        */
         while (opModeIsActive()) {
             // Translation and rotation controls
             {
@@ -60,9 +60,22 @@ public class Teleop extends LinearOpMode {
                 feedServo.setPosition(GATE_OPEN_DEGREES/GATE_DEGREES_SCALING);
             }
 
+            while (gamepad1.dpad_down){
+                leftLaunchMotor.setPower(leftLaunchMotor.getPower() + 0.1);
+                rightLaunchMotor.setPower(rightLaunchMotor.getPower() + 0.1);
+            }
+            while (gamepad1.dpad_up){
+                leftLaunchMotor.setPower(leftLaunchMotor.getPower() - 0.1);
+                rightLaunchMotor.setPower(rightLaunchMotor.getPower() - 0.1);
+            }
+
+
             telemetry.addData("servo pos", feedServo.getPosition());
             telemetry.addData("right trigger pose: ", gamepad1.right_trigger);
             telemetry.addData("left trigger pose: ", gamepad1.left_trigger);
+            telemetry.addData("Left launcher speed: ", leftLaunchMotor.getPower());
+            telemetry.addData("Right launcher speed: ", rightLaunchMotor.getPower());
+
             telemetry.update();
         }
     }

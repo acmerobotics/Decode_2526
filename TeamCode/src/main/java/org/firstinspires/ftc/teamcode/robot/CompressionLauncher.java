@@ -3,45 +3,62 @@ import static android.os.SystemClock.sleep;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class CompressionLauncher {
-    HardwareMap hMap = null;
-    DcMotor compressionMotor = null;
-    Servo feedServo = null;
+    HardwareMap hMap;
+    DcMotor leftLaunchMotor, rightLaunchMotor;
+    Servo feedServo;
 
-    private static int SPINUP_WAIT_MS = 250;
-    private static double FEED_OPEN_POSE =  0;
-    private static double FEED_CLOSE_POSE =  0.5;
+    private static final int OPEN_GATE_DURATION_MS =  500;
 
-    private static int OPEN_GATE_DURATION_MS =  3000;
-//: Comment
+    private static final double POWER_STEP = 0.1;
+
+    private static final float GATE_OPEN_DEGREES = 45;
+
+    private static final float GATE_CLOSED_DEGREES = 45 + 90;
+
+    private static final float GATE_DEGREES_SCALING = 300;
+
+    private double power = 0;
+
 
     public CompressionLauncher(HardwareMap hardwareMap){
         hMap = hardwareMap;
-        compressionMotor = hMap.get(DcMotorEx.class, "launchMotor");
+        leftLaunchMotor = hMap.get(DcMotorEx.class, "leftLaunchMotor");
+        rightLaunchMotor = hMap.get(DcMotorEx.class, "rightLaunchMotor");
         feedServo = hMap.get(Servo.class, "feedServo");
+        rightLaunchMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
-
-
-    public void launchAll(){
-        compressionMotor.setPower(1);
-        sleep(SPINUP_WAIT_MS);
-        feedServo.setPosition(FEED_OPEN_POSE);
+    public void feedOne(){
+        // Open Gate
+        feedServo.setPosition(GATE_OPEN_DEGREES/GATE_DEGREES_SCALING);
+        // Wait
         sleep(OPEN_GATE_DURATION_MS);
-        feedServo.setPosition(FEED_CLOSE_POSE);
-        compressionMotor.setPower(0);
-
+        // Close Gate
+        feedServo.setPosition(GATE_CLOSED_DEGREES/GATE_DEGREES_SCALING);
     }
 
-    public void tvTime(Boolean yes){
-        if (yes){
-            
-        }
-        if (!yes){
-            
-        }
+    // Start Motor
+    public void start(){
+        leftLaunchMotor.setPower(power);
+        rightLaunchMotor.setPower(power);
+    }
+
+    public void stop(){
+        leftLaunchMotor.setPower(0);
+        rightLaunchMotor.setPower(0);
+    }
+
+    public void addPower(){
+        power = Math.min(1.0, power + POWER_STEP);
+    }
+    public void subPower(){
+        power = Math.max(0.0, power - POWER_STEP);
     }
 }
 

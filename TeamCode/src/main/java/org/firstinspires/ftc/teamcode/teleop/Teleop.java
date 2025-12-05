@@ -4,11 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.CompressionLauncher;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 @TeleOp(name = "Teleop", group = "Linear OpMode")
 public class Teleop extends LinearOpMode {
@@ -25,6 +23,8 @@ public class Teleop extends LinearOpMode {
         DcMotor rightLaunchMotor = hardwareMap.get(DcMotorEx.class, "rightLaunchMotor");
 
         Servo feedServo = hardwareMap.get(Servo.class, "feedServo");
+
+        CompressionLauncher launcher = new CompressionLauncher(hardwareMap);
 
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -53,20 +53,23 @@ public class Teleop extends LinearOpMode {
             }
             
             if (gamepad1.right_trigger > .50) {
-                feedServo.setPosition(GATE_CLOSED_DEGREES/GATE_DEGREES_SCALING);
-            }
-            
-            if (gamepad1.left_trigger > .50) {
-                feedServo.setPosition(GATE_OPEN_DEGREES/GATE_DEGREES_SCALING);
+                launcher.feedOne();
             }
 
-            while (gamepad1.dpad_down){
-                leftLaunchMotor.setPower(leftLaunchMotor.getPower() + 0.1);
-                rightLaunchMotor.setPower(rightLaunchMotor.getPower() + 0.1);
+            if (gamepad1.dpad_down){
+                launcher.addPower();
             }
-            while (gamepad1.dpad_up){
-                leftLaunchMotor.setPower(leftLaunchMotor.getPower() - 0.1);
-                rightLaunchMotor.setPower(rightLaunchMotor.getPower() - 0.1);
+
+            if (gamepad1.dpad_up){
+                launcher.subPower();
+            }
+
+            if (gamepad1.a){
+                launcher.start();
+            }
+
+            if (gamepad1.b){
+                launcher.stop();
             }
 
 

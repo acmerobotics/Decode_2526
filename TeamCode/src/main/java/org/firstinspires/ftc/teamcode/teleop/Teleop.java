@@ -34,11 +34,6 @@ public class Teleop extends LinearOpMode {
         rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
-        /*
-        while (opModeInInit()){
-            launchMotor.setPower(.7);
-        }
-        */
         while (opModeIsActive()) {
             // Translation and rotation controls
             {
@@ -51,27 +46,28 @@ public class Teleop extends LinearOpMode {
                 rightBack.setPower((x + y - turn) * motorPowerScaling);
                 rightFront.setPower((-x + y - turn) * motorPowerScaling);
             }
-            
-            if (gamepad1.right_trigger > .50) {
-                launcher.feedOne();
-            }
+            {
+                //Launcher controls
+                if (gamepad1.right_trigger > .50) {
+                    launcher.feedOne();
+                }
 
-            if (gamepad1.dpad_down){
-                launcher.addPower();
-            }
+                if (gamepad1.dpad_down) {
+                    launcher.addPower();
+                }
 
-            if (gamepad1.dpad_up){
-                launcher.subPower();
-            }
+                if (gamepad1.dpad_up) {
+                    launcher.subPower();
+                }
 
-            if (gamepad1.a){
-                launcher.start();
-            }
+                if (gamepad1.a) {
+                    launcher.start();
+                }
 
-            if (gamepad1.b){
-                launcher.stop();
+                if (gamepad1.b) {
+                    launcher.stop();
+                }
             }
-
 
             telemetry.addData("servo pos", feedServo.getPosition());
             telemetry.addData("right trigger pose: ", gamepad1.right_trigger);

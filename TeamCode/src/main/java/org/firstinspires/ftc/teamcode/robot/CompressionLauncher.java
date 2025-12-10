@@ -18,7 +18,7 @@ public class CompressionLauncher {
 
     private static final float GATE_OPEN_DEGREES = 45;
 
-    private static final float GATE_CLOSED_DEGREES = 45 + 90;
+    private static final float GATE_CLOSED_DEGREES = 130;
 
     private static final float GATE_DEGREES_SCALING = 300;
 
@@ -35,15 +35,11 @@ public class CompressionLauncher {
         rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     public void feedOne(){
-        // Open Gate
         feedServo.setPosition(GATE_OPEN_DEGREES/GATE_DEGREES_SCALING);
-        // Wait
         sleep(OPEN_GATE_DURATION_MS);
-        // Close Gate
         feedServo.setPosition(GATE_CLOSED_DEGREES/GATE_DEGREES_SCALING);
     }
 
-    // Start Motor
     public void start(){
         leftLaunchMotor.setPower(power);
         rightLaunchMotor.setPower(power);

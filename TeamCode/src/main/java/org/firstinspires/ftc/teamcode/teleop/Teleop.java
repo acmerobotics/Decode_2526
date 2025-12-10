@@ -49,7 +49,9 @@ public class Teleop extends LinearOpMode {
             {
                 //Launcher controls
                 if (gamepad1.right_trigger > .50) {
-                    launcher.feedOne();
+                    launcher.open();
+                } else {
+                    launcher.close();
                 }
 
                 if (gamepad1.dpad_down) {

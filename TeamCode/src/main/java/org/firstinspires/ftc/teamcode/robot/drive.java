@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 public class drive {
     HardwareMap hMap = null;
     DcMotor dcMotorA = null;
@@ -42,14 +45,9 @@ public class drive {
         dcMotorB.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));
         dcMotorC.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));
         dcMotorD.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));
-        dcMotorA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        dcMotorB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        dcMotorC.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        dcMotorD.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        dcMotorA.setPower(.75);
-        dcMotorB.setPower(.75);
-        dcMotorC.setPower(.75);
-        dcMotorD.setPower(.75);
+        forEachMotor((DcMotor motor) -> {motor.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));});
+        forEachMotor((DcMotor motor) -> {motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);});
+        forEachMotor((DcMotor motor) -> {motor.setPower(.75);});
         sleep(2000);
     }
     
@@ -105,5 +103,11 @@ public class drive {
                 "\ndcMotorC Position " + dcMotorC.getCurrentPosition() +
                 "\nDcMotorD Position " + dcMotorD.getCurrentPosition();
 
+    }
+    private void forEachMotor(Consumer<DcMotor> f){
+        f.accept(dcMotorA);
+        f.accept(dcMotorB);
+        f.accept(dcMotorC);
+        f.accept(dcMotorD);
     }
 }

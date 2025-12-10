@@ -49,6 +49,12 @@ public class CompressionLauncher {
         leftLaunchMotor.setPower(0);
         rightLaunchMotor.setPower(0);
     }
+    public void open(){
+        feedServo.setPosition(GATE_OPEN_DEGREES/GATE_DEGREES_SCALING);
+    }
+    public void close(){
+        feedServo.setPosition(GATE_CLOSED_DEGREES/GATE_DEGREES_SCALING);
+    }
 
     public void addPower(){
         power = Math.min(1.0, power + POWER_STEP);

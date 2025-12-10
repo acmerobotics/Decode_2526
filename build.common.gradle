@@ -26,7 +26,7 @@ android {
     signingConfigs {
         release {
             def apkStoreFile = System.getenv("APK_SIGNING_STORE_FILE")
-            if (apkStoreFile != null) {
+            if (apkStoreFile !) {
                 keyAlias System.getenv("APK_SIGNING_KEY_ALIAS")
                 keyPassword System.getenv("APK_SIGNING_KEY_PASSWORD")
                 storeFile file(System.getenv("APK_SIGNING_STORE_FILE"))

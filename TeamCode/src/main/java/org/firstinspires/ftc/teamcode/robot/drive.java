@@ -4,23 +4,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class drive {
-    HardwareMap hMap = null;
-    DcMotor dcMotorA = null;
-    DcMotor dcMotorB = null;
-    DcMotor dcMotorC = null;
-    DcMotor dcMotorD = null;
+    HardwareMap hMap;
+    DcMotor dcMotorA;
+    DcMotor dcMotorB;
+    DcMotor dcMotorC;
+    DcMotor dcMotorD;
     
     // The value that we multiply the encoder by to get one tile
     static final float WHEEL_MOTOR_ENCODER_SCALING = 1003.046f;
-    static final int LEFT_EXTENDER_ENDSTOP = 1695;
-    static final int RIGHT_EXTENDER_ENDSTOP = 1695;
 
     public drive(HardwareMap hardwareMap) {
         hMap = hardwareMap;
@@ -37,19 +32,14 @@ public class drive {
     }
 
     public void driveTiles(float Tiles) {
-        dcMotorA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        dcMotorB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        dcMotorD.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        dcMotorC.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        dcMotorA.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));
-        dcMotorB.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));
-        dcMotorC.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));
-        dcMotorD.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));
-        forEachMotor((DcMotor motor) -> {motor.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles));});
-        forEachMotor((DcMotor motor) -> {motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);});
-        forEachMotor((DcMotor motor) -> {motor.setPower(.75);});
+        forEachMotor(m -> m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+        forEachMotor(m -> m.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles)));
+        forEachMotor(m -> m.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles)));
+        forEachMotor(m -> m.setMode(DcMotor.RunMode.RUN_TO_POSITION));
+        forEachMotor(m -> m.setPower(.75));
         sleep(2000);
     }
+
     
     // Positive rotates to the left, and negative rotates to the right
     public void setRotateDegrees(double Deg) {

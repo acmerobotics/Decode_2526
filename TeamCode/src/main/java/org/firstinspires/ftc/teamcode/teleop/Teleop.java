@@ -74,6 +74,7 @@ public class Teleop extends LinearOpMode {
             telemetry.addData("left trigger pose: ", gamepad1.left_trigger);
             telemetry.addData("Left launcher speed: ", leftLaunchMotor.getPower());
             telemetry.addData("Right launcher speed: ", rightLaunchMotor.getPower());
+            telemetry.addData("launcherPower: ", launcher.getPower());
 
             telemetry.update();
         }

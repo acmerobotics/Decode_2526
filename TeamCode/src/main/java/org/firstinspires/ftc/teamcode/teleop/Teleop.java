@@ -33,6 +33,9 @@ public class Teleop extends LinearOpMode {
         leftLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        final float GATE_OPEN_DEGREES = 45;
+        final float GATE_CLOSED_DEGREES = 130;
+        final float GATE_DEGREES_SCALING = 300;
         waitForStart();
         while (opModeIsActive()) {
             // Translation and rotation controls
@@ -49,11 +52,11 @@ public class Teleop extends LinearOpMode {
             {
                 //Launcher controls
                 if (gamepad1.right_trigger > .50) {
-                    launcher.open();
+                    feedServo.setPosition(GATE_OPEN_DEGREES/GATE_DEGREES_SCALING);
                 } else {
-                    launcher.close();
+                    feedServo.setPosition(GATE_CLOSED_DEGREES/GATE_DEGREES_SCALING);
                 }
-
+                /*
                 if (gamepad1.dpad_down) {
                     launcher.addPower();
                 }
@@ -61,9 +64,10 @@ public class Teleop extends LinearOpMode {
                 if (gamepad1.dpad_up) {
                     launcher.subPower();
                 }
-
+                */
                 if (gamepad1.a) {
-                    launcher.start();
+                    leftLaunchMotor.setPower(.75);
+                    rightLaunchMotor.setPower(.75);
                 }
 
                 if (gamepad1.b) {

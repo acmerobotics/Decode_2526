@@ -56,15 +56,6 @@ public class Teleop extends LinearOpMode {
                 } else {
                     feedServo.setPosition(GATE_CLOSED_DEGREES/GATE_DEGREES_SCALING);
                 }
-                /*
-                if (gamepad1.dpad_down) {
-                    launcher.addPower();
-                }
-
-                if (gamepad1.dpad_up) {
-                    launcher.subPower();
-                }
-                */
                 if (gamepad1.a) {
                     leftLaunchMotor.setPower(.75);
                     rightLaunchMotor.setPower(.75);
@@ -72,6 +63,9 @@ public class Teleop extends LinearOpMode {
 
                 if (gamepad1.b) {
                     launcher.stop();
+                }
+                if (gamepad1.x){
+                    feedServo.setPosition(0);
                 }
             }
 

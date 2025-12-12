@@ -12,8 +12,8 @@ public  class purpleAuto2 extends LinearOpMode {
         drive drive = new drive(hardwareMap);
 
         if (opModeIsActive() && !isStopRequested()) {
-            drive.driveTiles(33/24f);
-            drive.setRotateDegrees(-90f);
+            drive.driveTiles(1f);
+            drive.setRotateDegrees(180);
         }
 
         while (opModeIsActive()) {

@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.robot.CompressionLauncher;
 public class Teleop extends LinearOpMode {
 
     static double SLOWMO_POWER_SCALE = .2;
+    boolean incrementReady = true;
 
     public void runOpMode() {
         DcMotor leftFront = hardwareMap.get(DcMotor.class, "leftFront");
@@ -64,13 +65,19 @@ public class Teleop extends LinearOpMode {
                     launcher.stop();
                 }
 
-                if (gamepad1.dpad_up){
+                if (gamepad1.dpad_up && incrementReady){
                     launcher.addPower();
-                    sleep(200);
                 }
-                if (gamepad1.dpad_down){
+                if (gamepad1.dpad_down && incrementReady){
                     launcher.subPower();
-                    sleep(200);
+                }
+
+                if (!gamepad1.dpad_up && !gamepad1.dpad_down){
+                    incrementReady = true;
+                }
+
+                if (gamepad1.x){
+                    feedServo.setPosition(0);
                 }
             }
 

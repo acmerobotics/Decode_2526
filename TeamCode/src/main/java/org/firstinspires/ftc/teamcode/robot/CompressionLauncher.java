@@ -60,7 +60,7 @@ public class CompressionLauncher {
         power = Math.min(1.0, power + POWER_STEP);
     }
     public void subPower(){
-        power = Math.max(0.0, power - POWER_STEP);
+        power = Math.max(-0.5, power - POWER_STEP);
     }
 
     public double getPower(){

@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.robot.drive;
+import org.firstinspires.ftc.teamcode.robot.Drive;
 @Autonomous(name="Purple auto 2; touching goal", group="Autonomous")
 public  class purpleAuto2 extends LinearOpMode {
     @Override
@@ -9,7 +9,7 @@ public  class purpleAuto2 extends LinearOpMode {
     public void runOpMode() {
 
         waitForStart();
-        drive drive = new drive(hardwareMap);
+        Drive drive = new Drive(hardwareMap);
 
         if (opModeIsActive() && !isStopRequested()) {
             drive.driveTiles(1f);

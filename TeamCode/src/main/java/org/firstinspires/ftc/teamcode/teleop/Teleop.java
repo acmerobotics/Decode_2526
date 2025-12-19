@@ -67,9 +67,12 @@ public class Teleop extends LinearOpMode {
 
                 if (gamepad1.dpad_up && incrementReady){
                     launcher.addPower();
+                    incrementReady = false;
                 }
+
                 if (gamepad1.dpad_down && incrementReady){
                     launcher.subPower();
+                    incrementReady = false;
                 }
 
                 if (!gamepad1.dpad_up && !gamepad1.dpad_down){

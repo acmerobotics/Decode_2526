@@ -7,24 +7,24 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.function.Consumer;
 
-public class drive {
+public class Drive {
     HardwareMap hMap;
-    DcMotor dcMotorA;
-    DcMotor dcMotorB;
-    DcMotor dcMotorC;
-    DcMotor dcMotorD;
+    DcMotor leftFront;
+    DcMotor leftBack;
+    DcMotor rightBack;
+    DcMotor rightFront;
     
     // The value that we multiply the encoder by to get one tile
     static final float WHEEL_MOTOR_ENCODER_SCALING = 1003.046f;
 
-    public drive(HardwareMap hardwareMap) {
+    public Drive(HardwareMap hardwareMap) {
         hMap = hardwareMap;
-        dcMotorA = hMap.get(DcMotorEx.class, "leftFront");
-        dcMotorB = hMap.get(DcMotorEx.class, "leftBack");
-        dcMotorC = hMap.get(DcMotorEx.class, "rightBack");
-        dcMotorD = hMap.get(DcMotorEx.class, "rightFront");
-        dcMotorA.setDirection(DcMotorSimple.Direction.REVERSE);
-        dcMotorB.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront = hMap.get(DcMotorEx.class, "leftFront");
+        leftBack = hMap.get(DcMotorEx.class, "leftBack");
+        rightBack = hMap.get(DcMotorEx.class, "rightBack");
+        rightFront = hMap.get(DcMotorEx.class, "rightFront");
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         forEachMotor(m -> m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER));
     }
 
@@ -59,16 +59,20 @@ public class drive {
     }
     
     public String gatherMotorPos() {
-        return "dcMotorA Position " + dcMotorA.getCurrentPosition() +
-                "\ndcMotorB Position " + dcMotorB.getCurrentPosition() +
-                "\ndcMotorC Position " + dcMotorC.getCurrentPosition() +
-                "\nDcMotorD Position " + dcMotorD.getCurrentPosition();
+        return "leftFront Position " + leftFront.getCurrentPosition() +
+                "\nleftBack Position " + leftBack.getCurrentPosition() +
+                "\nrightBack Position " + rightBack.getCurrentPosition() +
+                "\nrightFront Position " + rightFront.getCurrentPosition();
 
     }
     private void forEachMotor(Consumer<DcMotor> f){
-        f.accept(dcMotorA);
-        f.accept(dcMotorB);
-        f.accept(dcMotorC);
-        f.accept(dcMotorD);
+        f.accept(leftFront);
+        f.accept(leftBack);
+        f.accept(rightBack);
+        f.accept(rightFront);
+    }
+
+    public void waitUntilPosition(){
+
     }
 }

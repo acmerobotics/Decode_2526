@@ -5,7 +5,11 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Drive {
     HardwareMap hMap;
@@ -31,7 +35,7 @@ public class Drive {
 
     public void driveTiles(float Tiles) {
         forEachMotor(m -> m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER));
-        forEachMotor(m -> m.setPower(.75));
+        forEachMotor(m -> m.setPower(.1));
         forEachMotor(m -> m.setTargetPosition((int) (WHEEL_MOTOR_ENCODER_SCALING * Tiles)));
         forEachMotor(m -> m.setMode(DcMotor.RunMode.RUN_TO_POSITION));
         sleep(2000);
@@ -64,13 +68,16 @@ public class Drive {
                 "\nleftBack Position " + leftBack.getCurrentPosition() +
                 "\nrightBack Position " + rightBack.getCurrentPosition() +
                 "\nrightFront Position " + rightFront.getCurrentPosition();
-
     }
     private void forEachMotor(Consumer<DcMotor> f){
-        f.accept(leftFront);
-        f.accept(leftBack);
-        f.accept(rightBack);
-        f.accept(rightFront);
+        Stream.of( leftFront, leftBack, rightBack, rightFront ).forEach(f);
+
+    }
+    public String forEachMotorString (Function<DcMotor, String> f){
+        return Stream.of( leftFront, leftBack, rightBack, rightFront )
+                .map(f)
+                .collect(Collectors.joining("\n"));
+
     }
 
     public void waitUntilPosition(){

@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.robot.CompressionLauncher;
 
 @TeleOp(name = "Teleop", group = "Linear OpMode")
 public class Teleop extends LinearOpMode {
@@ -20,19 +19,19 @@ public class Teleop extends LinearOpMode {
         DcMotor rightBack = hardwareMap.get(DcMotor.class, "rightBack");
         DcMotor rightFront = hardwareMap.get(DcMotor.class, "rightFront");
 
-        DcMotor leftLaunchMotor = hardwareMap.get(DcMotorEx.class, "leftLaunchMotor");
-        DcMotor rightLaunchMotor = hardwareMap.get(DcMotorEx.class, "rightLaunchMotor");
+        //DcMotor leftLaunchMotor = hardwareMap.get(DcMotorEx.class, "leftLaunchMotor");
+        //DcMotor rightLaunchMotor = hardwareMap.get(DcMotorEx.class, "rightLaunchMotor");
 
-        Servo feedServo = hardwareMap.get(Servo.class, "feedServo");
+        //Servo feedServo = hardwareMap.get(Servo.class, "feedServo");
 
-        CompressionLauncher launcher = new CompressionLauncher(hardwareMap);
+        //CompressionLauncher launcher = new CompressionLauncher(hardwareMap);
 
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightLaunchMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        //rightLaunchMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        leftLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //leftLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         final float GATE_OPEN_DEGREES = 45;
         final float GATE_CLOSED_DEGREES = 130;
@@ -53,25 +52,25 @@ public class Teleop extends LinearOpMode {
             {
                 //Launcher controls
                 if (gamepad1.right_trigger > .50) {
-                    launcher.open();
+                    //launcher.open();
                 } else {
-                    launcher.close();
+                    //launcher.close();
                 }
                 if (gamepad1.a) {
-                    launcher.start();
+                    //launcher.start();
                 }
 
                 if (gamepad1.b) {
-                    launcher.stop();
+                    //launcher.stop();
                 }
 
                 if (gamepad1.dpad_up && incrementReady){
-                    launcher.addPower();
+                    //launcher.addPower();
                     incrementReady = false;
                 }
 
                 if (gamepad1.dpad_down && incrementReady){
-                    launcher.subPower();
+                    //launcher.subPower();
                     incrementReady = false;
                 }
 
@@ -80,16 +79,16 @@ public class Teleop extends LinearOpMode {
                 }
 
                 if (gamepad1.x){
-                    feedServo.setPosition(0);
+                    //feedServo.setPosition(0);
                 }
             }
 
-            telemetry.addData("servo pos", feedServo.getPosition());
+            //telemetry.addData("servo pos", feedServo.getPosition());
             telemetry.addData("right trigger pose: ", gamepad1.right_trigger);
             telemetry.addData("left trigger pose: ", gamepad1.left_trigger);
-            telemetry.addData("Left launcher speed: ", leftLaunchMotor.getPower());
-            telemetry.addData("Right launcher speed: ", rightLaunchMotor.getPower());
-            telemetry.addData("launcherPower: ", launcher.getPower());
+            //telemetry.addData("Left launcher speed: ", leftLaunchMotor.getPower());
+            //telemetry.addData("Right launcher speed: ", rightLaunchMotor.getPower());
+            //telemetry.addData("launcherPower: ", launcher.getPower());
 
             telemetry.update();
         }

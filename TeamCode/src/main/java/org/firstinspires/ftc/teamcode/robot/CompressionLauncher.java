@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode.robot;
 import static android.os.SystemClock.sleep;
 
@@ -24,15 +25,22 @@ public class CompressionLauncher {
 
     private double power = 0;
 
+    private String status = "OK";
 
     public CompressionLauncher(HardwareMap hardwareMap){
         hMap = hardwareMap;
-        leftLaunchMotor = hMap.get(DcMotorEx.class, "leftLaunchMotor");
-        rightLaunchMotor = hMap.get(DcMotorEx.class, "rightLaunchMotor");
-        feedServo = hMap.get(Servo.class, "feedServo");
-        rightLaunchMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        try {
+            leftLaunchMotor = hMap.get(DcMotorEx.class, "leftLaunchMotor");
+            rightLaunchMotor = hMap.get(DcMotorEx.class, "rightLaunchMotor");
+            feedServo = hMap.get(Servo.class, "feedServo");
+            rightLaunchMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+            //leftLaunchMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+            leftLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightLaunchMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        } catch (IllegalArgumentException e){
+            status = e.toString();
+        }
+        // TODO (Jasper) Add checks for null, if null abort
     }
     public void feedOne(){
         feedServo.setPosition(GATE_OPEN_DEGREES/GATE_DEGREES_SCALING);
@@ -67,4 +75,3 @@ public class CompressionLauncher {
         return power;
     }
 }
-

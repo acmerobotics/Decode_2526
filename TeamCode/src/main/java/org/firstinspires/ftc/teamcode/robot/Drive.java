@@ -27,6 +27,8 @@ public class Drive {
         leftBack = hMap.get(DcMotorEx.class, "leftBack");
         rightBack = hMap.get(DcMotorEx.class, "rightBack");
         rightFront = hMap.get(DcMotorEx.class, "rightFront");
+        DcMotor leftLaunchMotor = hardwareMap.get(DcMotorEx.class, "leftLaunchMotor");
+        DcMotor rightLaunchMotor = hardwareMap.get(DcMotorEx.class, "rightLaunchMotor");
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);

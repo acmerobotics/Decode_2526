@@ -88,7 +88,6 @@ public class Teleop extends LinearOpMode {
             }
             turret.update(0, 0, 0, true);
 
-
             telemetry.addData("servo pos", feedServo.getPosition());
             telemetry.addData("right trigger pose: ", gamepad1.right_trigger);
             telemetry.addData("left trigger pose: ", gamepad1.left_trigger);

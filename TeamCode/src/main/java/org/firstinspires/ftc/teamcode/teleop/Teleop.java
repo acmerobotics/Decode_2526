@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.CompressionLauncher;
+import org.firstinspires.ftc.teamcode.robot.autoTurret;
 
 @TeleOp(name = "Teleop", group = "Linear OpMode")
 public class Teleop extends LinearOpMode {
@@ -26,6 +27,8 @@ public class Teleop extends LinearOpMode {
         Servo feedServo = hardwareMap.get(Servo.class, "feedServo");
 
         CompressionLauncher launcher = new CompressionLauncher(hardwareMap);
+
+        autoTurret turret = new autoTurret(hardwareMap, telemetry);
 
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -83,6 +86,8 @@ public class Teleop extends LinearOpMode {
                     feedServo.setPosition(0);
                 }
             }
+            turret.update(0, 0, 0, true);
+
 
             telemetry.addData("servo pos", feedServo.getPosition());
             telemetry.addData("right trigger pose: ", gamepad1.right_trigger);

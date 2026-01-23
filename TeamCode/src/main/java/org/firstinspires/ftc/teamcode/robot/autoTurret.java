@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -64,7 +65,7 @@ public class autoTurret {
      * @param robotY Current Y from Odometry
      * @param robotHeading Current Heading in DEGREES
      * @param flywheelsOn Should the flywheels be spinning?
-     */
+
     public void update(double robotX, double robotY, double robotHeading, boolean flywheelsOn) {
 
         // --- Part 1: Flywheel Control ---
@@ -97,9 +98,5 @@ public class autoTurret {
 
         double power = (error * TURRET_kP) + (derivative * TURRET_kD);
         turretMotor.setPower(Range.clip(power, -.75, .75));
-
-        // Telemetry for the Programmer
-        telemetry.addData("Turret Error", error);
-        telemetry.addData("Flywheel Velocity", leftFlywheel.getVelocity());
     }
-}
+} */
